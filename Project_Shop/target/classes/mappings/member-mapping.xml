@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MemberDAO">
+
+	<select id="listView" parameterType="listVO" resultType="member">
+		SELECT * FROM 
+		    (SELECT ROWNUM as rn, A.* 
+		    FROM (SELECT * 
+		        FROM member
+		        ORDER BY id) A
+		    WHERE ROWNUM <![CDATA[<=]]> #{end}) B
+		WHERE B.rn <![CDATA[>=]]> #{start}
+	</select>
+	
+	
+	
+</mapper>

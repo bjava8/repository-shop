@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProductDAO">
+	<!-- parameterType category -->
+	<select id="getTotal" parameterType="listVO" resultType="int">
+		SELECT COUNT(*) cnt
+		FROM product 
+		WHERE category LIKE #{category}||'%'
+	</select>
+	<select id="listView" parameterType="listVO" resultType="product">
+		SELECT * FROM 
+		    (SELECT ROWNUM as rn, A.* 
+		    FROM (SELECT * 
+		        FROM product
+		        WHERE category LIKE #{category}||'%'
+		        ORDER BY hit) A
+		    WHERE ROWNUM <![CDATA[<=]]> #{end}) B
+		WHERE B.rn <![CDATA[>=]]> #{start}
+	</select>
+	
+	<select id="getProduct" parameterType="product" resultType="product">
+		SELECT * FROM product
+		WHERE id = #{id}
+	</select>
+	
+	<insert id="insertProduct" parameterType="product">
+		INSERT INTO product 
+		(id, category, name, price, imgfile) 
+		VALUES (#{id}, #{category}, #{name}, #{price}, #{imgFile});
+	</insert>
+	
+	
+	
+</mapper>
