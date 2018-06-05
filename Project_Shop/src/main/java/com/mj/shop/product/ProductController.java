@@ -93,20 +93,31 @@ public class ProductController {
 		 return model;
 	}
 	
+	
+	/**
+	 * id=id, name=name, category=101101100, price=1, imgFile=org.springframework.web.multipart.commons.CommonsMultipartFile@36def2ad, detail=, soldout=null, discount_rate=, discount_price=, hit=null]
+	 * @param model
+	 * @param vo ProductVO2 Product Form File
+	 * @return
+	 */
 	@RequestMapping(value = "/insertProduct", method = RequestMethod.POST)
 	//public ModelAndView insertProduct(ProductVO vo, ModelAndView model, HttpServletRequest request, @RequestParam("imgFile") MultipartFile file) {
-	public String insertProduct(ModelAndView model, ProductVO vo) {
+	public String insertProduct(ModelAndView model, ProductVO2 vo) {
 		 logger.info("[ProductCont.insertProduct] START " + vo);
 		 
-		 //MultipartFile imgFile = file;
-		 //vo.getImgFile();
-		 //if (!imgFile.isEmpty()) {
+		 MultipartFile imgFile = vo.getImgFile();
+		 if (!imgFile.isEmpty()) {
 			 //String fileName = imgFile.getOriginalFilename(); //실제파일명
 			 
-			//logger.info("name : " + imgFile.getName());
-			//logger.info("filename : " + imgFile.getOriginalFilename());
-			//logger.info("size : " + imgFile.getSize());
-			 
+			logger.info("name : " + imgFile.getName());
+			logger.info("filename : " + imgFile.getOriginalFilename());
+			logger.info("size : " + imgFile.getSize());
+			/*
+			 * name : imgFile
+INFO : com.mj.shop.product.ProductController - filename : JJMENQ7AF403SR420.jpg
+INFO : com.mj.shop.product.ProductController - size : 88583
+			 */
+		 }	 
 			//uploadFile.transferTo(new File("c:/MyStudy/temp/" + fileName));
 			
 			//String path = request.getSession().getServletContext().getRealPath("/");
@@ -118,12 +129,15 @@ public class ProductController {
 				e.printStackTrace();
 			}
 			*/
-		// }
+		 
 		 //productService.insertProduct(vo);
 		
 		 //model.setViewName("detail?p_code="+vo.getId());
 		 //WARN : org.springframework.web.servlet.PageNotFound - No mapping found for HTTP request with URI [/shop/WEB-INF/views/detail] in DispatcherServlet with name 'appServlet'
-		 return "detail?p_code=JJT1EI7AF445SW017";
+		 //return "detail?p_code=JJT1EI7AF445SW017";
+		 //model.addObject("p_code", "JJT1EI7AF445SW017")
+		 //return new ModelAndView("redirect:/redirectedUrl", model);
+		 return "redirect:detail?p_code=JJT1EI7AF445SW017";
 	}
 	
 	@RequestMapping(value = "/order", method = RequestMethod.POST)
